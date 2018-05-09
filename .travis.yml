@@ -3,10 +3,7 @@ language: python
 cache: pip
 
 python:
-  - "3.4"
-
-before_install:
-  - stty cols 80
+  - "3.6"
 
 install:
   - pip install pipenv
@@ -15,6 +12,6 @@ install:
 
 script:
   - pipenv run flake8
-  - pipenv run nosetests
+  - pipenv run pytest
 
 after_success: pipenv run codecov
