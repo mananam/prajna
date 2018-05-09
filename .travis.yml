@@ -1,0 +1,20 @@
+sudo: false
+language: python
+cache: pip
+
+python:
+  - "3.4"
+
+before_install:
+  - stty cols 80
+
+install:
+  - pip install pipenv
+  - pipenv install --dev
+  - pipenv install codecov --dev
+
+script:
+  - pipenv run flake8
+  - pipenv run nosetests
+
+after_success: pipenv run codecov
