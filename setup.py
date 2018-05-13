@@ -46,12 +46,15 @@ class UploadCommand(Command):
         print("\033[1m{0}\033[0m".format(s))
 
     def initialize_options(self):
+        """Initialize upload command options."""
         pass
 
     def finalize_options(self):
+        """Finalize upload command options."""
         pass
 
     def run(self):
+        """Execute the command."""
         try:
             self.status("Removing previous builds…")
             rmtree(os.path.join(here, "dist"))
@@ -82,7 +85,7 @@ setup(
     py_modules=["prajna"],
 
     entry_points={
-        "console_scripts": ["prajna=prajna.prajna:cli"],
+        "console_scripts": ["prajna=prajna.main:cli"],
     },
     install_requires=REQUIRED,
     include_package_data=True,
