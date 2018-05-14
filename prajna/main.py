@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Command line for prajna."""
 import click
+import configparser
 import logging
 import os
 
@@ -18,7 +19,10 @@ def cli(ctx, debug):
 
     user_config = os.path.join(click.get_app_dir("prajna"), "config.ini")
     if os.path.exists(user_config):
-        ctx.obj['config'] = {}
+        parser = configparser.ConfigParser()
+        with open(user_config, "r", encoding="utf-8") as f:
+            parser.read_file(f)
+            ctx.obj['dict'] = dict(parser.items("dict"))
     else:
         logger.debug("Skip user configuration. Didn't find '{}'."
                      .format(user_config))

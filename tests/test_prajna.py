@@ -14,6 +14,11 @@ from click.testing import CliRunner
 def config(fs):
     user_config = os.path.join(click.get_app_dir("prajna"), "config.ini")
     fs.CreateFile(user_config)
+    config = """
+[dict]
+dict1=/tmp/prajna_test/dict1"""
+    with open(user_config, "w") as f:
+        f.write(config)
     return {}
 
 
@@ -27,9 +32,10 @@ def test_prajna_cli_debug_option_enables_verbose_log(caplog):
     assert debug in caplog.record_tuples
 
 
-def test_prajna_should_read_per_user_config(config):
+def test_prajna_should_read_per_user_config(fs, config):
     result = _run_command(prajna.main.cli, ["info"], config)
 
+    assert config['dict'] == {'dict1': "/tmp/prajna_test/dict1"}
     assert result.exception is None
     assert result.exit_code is 0
 
