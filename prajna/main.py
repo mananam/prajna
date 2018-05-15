@@ -33,7 +33,14 @@ def cli(ctx, debug):
 @click.pass_context
 def info(ctx):
     """List properties of current configuration."""
-    pass
+    if 'dict' not in ctx.obj:
+        return
+
+    dicts = ctx.obj['dict']
+    if len(dicts) > 0:
+        click.echo("Available dictionaries:")
+        for k, v in dicts.items():
+            click.echo("{}: {}".format(k, v))
 
 
 if __name__ == '__main__':

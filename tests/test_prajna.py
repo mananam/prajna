@@ -40,6 +40,14 @@ def test_prajna_should_read_per_user_config(fs, config):
     assert result.exit_code is 0
 
 
+def test_info_should_show_available_dictionaries(fs, config):
+    result = _run_command(prajna.main.cli, ["info"], config)
+
+    o = """Available dictionaries:
+dict1: /tmp/prajna_test/dict1\n"""
+    assert result.output == o
+
+
 def _run_command(command, args=[], config={}):
     return _run_command_with_stdin(command, args, config)
 
