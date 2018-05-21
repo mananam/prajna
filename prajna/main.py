@@ -12,7 +12,7 @@ logger = logging.getLogger("prajna")
 @click.option("--debug", is_flag=True, help="Enable verbose messages.")
 @click.pass_context
 def cli(ctx, debug):
-    """Prajna - tools for sanskrit books."""
+    """Prajna - tools for sanskrit translation."""
     if debug:
         logging.basicConfig(level=logging.DEBUG)
         logger.info("Verbose messages are enabled.")
@@ -41,6 +41,14 @@ def info(ctx):
         click.echo("Available dictionaries:")
         for k, v in dicts.items():
             click.echo("{}: {}".format(k, v))
+
+
+@cli.command()
+@click.pass_context
+@click.argument("text")
+def translate(ctx, text):
+    """Translate the given text into english."""
+    pass
 
 
 if __name__ == '__main__':

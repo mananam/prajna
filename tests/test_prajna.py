@@ -48,6 +48,12 @@ dict1: /tmp/prajna_test/dict1\n"""
     assert result.output == o
 
 
+def test_translate_should_show_word_definition(fs, config):
+    result = _run_command(prajna.main.cli, ["translate", "word"], config)
+
+    assert result.exit_code is 0
+
+
 def _run_command(command, args=[], config={}):
     return _run_command_with_stdin(command, args, config)
 
