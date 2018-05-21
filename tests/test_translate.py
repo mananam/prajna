@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """Tests for english translator."""
+from prajna.translate import EnglishTranslator
 
 
 def test_translate_should_output_word_meaning():
-    pass
+    t = EnglishTranslator()
+
+    assert t.translate() is None
