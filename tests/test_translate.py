@@ -4,6 +4,6 @@ from prajna.translate import EnglishTranslator
 
 
 def test_translate_should_output_word_meaning():
-    t = EnglishTranslator()
+    t = EnglishTranslator({})
 
-    assert t.translate() is None
+    assert t.translate("dummy") is None

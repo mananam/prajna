@@ -11,12 +11,12 @@ from click.testing import CliRunner
 
 
 @pytest.fixture
-def config(fs):
+def config(fs, dict_path="/tmp/prajna_test/dict1"):
     user_config = os.path.join(click.get_app_dir("prajna"), "config.ini")
     fs.CreateFile(user_config)
     config = """
 [dict]
-dict1=/tmp/prajna_test/dict1"""
+dict1={}""".format(dict_path)
     with open(user_config, "w") as f:
         f.write(config)
     return {}
@@ -48,10 +48,12 @@ dict1: /tmp/prajna_test/dict1\n"""
     assert result.output == o
 
 
-def test_translate_should_show_word_definition(fs, config):
-    result = _run_command(prajna.main.cli, ["translate", "word"], config)
+def test_translate_should_show_word_definition():
+    c = {'dict': {'dict1': "./tests/assets/dict1"}}
+    result = _run_command(prajna.main.cli, ["translate", "word2"], c)
 
     assert result.exit_code is 0
+    assert result.output == "word2_defn\n"
 
 
 def _run_command(command, args=[], config={}):

@@ -19,7 +19,7 @@ VERSION = (0, 0, 1)
 
 # Dependencies required for execution
 REQUIRED = [
-    "click>=6.7",
+    "click>=6.7", "stargaze"
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))

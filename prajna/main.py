@@ -5,6 +5,8 @@ import configparser
 import logging
 import os
 
+from prajna.translate import EnglishTranslator
+
 logger = logging.getLogger("prajna")
 
 
@@ -48,7 +50,8 @@ def info(ctx):
 @click.argument("text")
 def translate(ctx, text):
     """Translate the given text into english."""
-    pass
+    translator = EnglishTranslator(ctx.obj['dict'])
+    click.echo(translator.translate(text))
 
 
 if __name__ == '__main__':
