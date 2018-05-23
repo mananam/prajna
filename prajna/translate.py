@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """Prajna - tools for sanskrit translation."""
+import logging
+
 from stargaze import Dictionary
+from sanskrit_parser.base.sanskrit_base import SanskritObject
+
+logger = logging.getLogger("prajna")
 
 
 class EnglishTranslator(object):
@@ -21,8 +26,14 @@ class EnglishTranslator(object):
             for k, v in self._dict_config.items():
                 self._dicts.append(Dictionary(v))
 
+        # Analyze the input text
+        # sanskrit_text = SanskritObject(text)
+
         definitions = []
-        for dic in self._dicts:
-            definitions.append(dic.lookup(text))
+        for w in text.split(' '):
+            for dic in self._dicts:
+                defn = dic.lookup(w)
+                definitions.append(defn)
+                logger.debug("{}: {}, ".format(SanskritObject(w).canonical(), defn))
 
         return definitions[0] if len(definitions) > 0 else None

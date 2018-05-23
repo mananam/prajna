@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 "e1839a8" = {path = ".", editable = true}
+sanskrit_parser = {git = "https://github.com/kmadathil/sanskrit_parser.git", ref = "sanskrit_util"}
 
 [dev-packages]
 "flake8" = "*"

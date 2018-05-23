@@ -22,7 +22,7 @@ dict1={}""".format(dict_path)
     return {}
 
 
-def test_prajna_cli_debug_option_enables_verbose_log(caplog):
+def test_prajna_cli_debug_option_enables_verbose_log(fs, caplog):
     with caplog.at_level(logging.INFO):
         result = _run_command(prajna.main.cli, ["--debug", "info"])
 
@@ -49,7 +49,7 @@ dict1: /tmp/prajna_test/dict1\n"""
 
 
 def test_translate_should_show_word_definition():
-    c = {'dict': {'dict1': "./tests/assets/dict1"}}
+    c = {'skip_config': 1, 'dict': {'dict1': "./tests/assets/dict1"}}
     result = _run_command(prajna.main.cli, ["translate", "word2"], c)
 
     assert result.exit_code is 0

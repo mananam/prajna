@@ -20,7 +20,8 @@ def cli(ctx, debug):
         logger.info("Verbose messages are enabled.")
 
     user_config = os.path.join(click.get_app_dir("prajna"), "config.ini")
-    if os.path.exists(user_config):
+    skip_config = ctx.obj.get('skip_config', 0)
+    if skip_config == 0 and os.path.exists(user_config):
         parser = configparser.ConfigParser()
         with open(user_config, "r", encoding="utf-8") as f:
             parser.read_file(f)
@@ -28,7 +29,6 @@ def cli(ctx, debug):
     else:
         logger.debug("Skip user configuration. Didn't find '{}'."
                      .format(user_config))
-    pass
 
 
 @cli.command()
