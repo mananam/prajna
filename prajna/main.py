@@ -19,6 +19,9 @@ def cli(ctx, debug):
         logging.basicConfig(level=logging.DEBUG)
         logger.info("Verbose messages are enabled.")
 
+    if ctx.obj is None:
+        ctx.obj = {}
+
     user_config = os.path.join(click.get_app_dir("prajna"), "config.ini")
     skip_config = ctx.obj.get('skip_config', 0)
     if skip_config == 0 and os.path.exists(user_config):
