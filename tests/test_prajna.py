@@ -56,7 +56,7 @@ def test_translate_should_show_word_definition():
     assert result.output == "word2_defn\n"
 
 
-def _run_command(command, args=[], config={}):
+def _run_command(command, args=[], config=None):
     return _run_command_with_stdin(command, args, config)
 
 

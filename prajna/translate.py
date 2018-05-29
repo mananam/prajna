@@ -14,7 +14,7 @@ DictionaryEntry = namedtuple("DictionaryEntry", "word meaning grammar")
 class EnglishTranslator(object):
     """Sanskrit to English translation engine."""
 
-    def __init__(self, dicts, slp1=True):
+    def __init__(self, dicts, slp1=False):
         """Create an instance of the English Translator.
 
         Args:
@@ -22,27 +22,29 @@ class EnglishTranslator(object):
         """
         self._dict_config = dicts
         self._dicts = []
+        self._use_slp1 = slp1
 
     def translate(self, text):
         """Translate a source text in sanskrit to english."""
         if self._dicts == []:
             for k, v in self._dict_config.items():
                 self._dicts.append(Dictionary(v))
+                parser = DictParser(k)
 
         # Analyze the input text
         # sanskrit_text = SanskritObject(text)
 
-        parser = DictParser("spokensanskrit")
         definitions = []
         for w in text.split(' '):
-            word = SanskritObject(w)
+            if self._use_slp1:
+                w = SanskritObject(w).devanagari()
             for dic in self._dicts:
-                defn = parser.parse(dic.lookup(word.devanagari()))
+                defn = parser.parse(dic.lookup(w))
                 if len(defn) > 0:
                     definitions.append(defn[0])
-                    logger.debug("{}: {}".format(word.canonical(), defn[0]))
+                    logger.debug("{}: {}".format(SanskritObject(w).canonical(), defn[0]))
 
-        return definitions[0] if len(definitions) > 0 else None
+        return definitions[0].meaning if len(definitions) > 0 else None
 
 
 class DictParser(object):
@@ -53,13 +55,12 @@ class DictParser(object):
         if dictname == "spokensanskrit":
             self._parser = self._parse_spokensanskrit
         else:
-            logger.debug("No matching parser available.")
+            self._parser = self._parse_generic
+            logger.debug("No matching parser available. Using a generic parser.")
 
     def parse(self, text):
         """Parse dictionary definition text to objects."""
-        if self._parser is not None:
-            return self._parser(text)
-        return []
+        return self._parser(text)
 
     def _parse_spokensanskrit(self, text):
         defs = []
@@ -72,3 +73,7 @@ class DictParser(object):
                                         meaning=columns[4].get_text(" "),
                                         grammar=columns[3].get_text(" ")))
         return defs
+
+    def _parse_generic(self, text):
+        # We don't have few data for a generic parser. Just return the meaning
+        return [DictionaryEntry(word=None, meaning=text, grammar=None)]
