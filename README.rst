@@ -34,5 +34,5 @@ Pull requests are most welcome.
 .. |Say thanks!| image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
    :target: https://saythanks.io/to/codito
 
-.. |Build| image:: https://img.shields.io/travis/codito/prajna.svg
-    :target: https://travis-ci.org/codito/prajna
+.. |Build| image:: https://img.shields.io/travis/mananam/prajna.svg
+    :target: https://travis-ci.org/mananam/prajna
