@@ -20,6 +20,3 @@ pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 pyfakefs = "*"
-
-[requires]
-python_version = "3.6"
